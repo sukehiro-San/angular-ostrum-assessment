@@ -1,0 +1,148 @@
+<button class="glass-btn" (click)="logout()">Logout</button>
+
+<app-add-product
+  *ngIf="popupType() === 'add' && showPopup()"
+  (close)="closePopup($event)"
+></app-add-product>
+<app-update-product
+  *ngIf="popupType() === 'update' && showPopup()"
+  [product]="selectedProduct"
+  (close)="closePopup($event)"
+></app-update-product>
+<app-delete-product
+  *ngIf="popupType() === 'delete' && showPopup()"
+  [product]="selectedProduct"
+  (close)="closePopup($event)"
+></app-delete-product>
+
+<div class="glass-container">
+  <div style="text-align: right; margin-bottom: 1rem; margin-right: 3rem">
+    <button
+      class="glass-btn"
+      (click)="popupType.set('add'); showPopup.set(true)"
+    >
+      Add Product
+    </button>
+  </div>
+  <table class="glass-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Example row, replace with *ngFor="let product of products" in Angular -->
+      <tr *ngFor="let product of products()">
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.description }}</td>
+        <td>
+          <button
+            class="glass-btn"
+            (click)="
+              openPopup('update', product);
+            "
+          >
+            Edit
+          </button>
+        </td>
+        <td>
+          <button
+            class="glass-btn delete"
+            (click)="
+              openPopup('delete', product);
+            "
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <style>
+    .glass-container {
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      margin: 2rem auto;
+      max-width: 1000px;
+      z-index: 1;
+    }
+
+    .glass-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #222;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .glass-table th,
+    .glass-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-table th {
+      background: rgba(255, 255, 255, 0.3);
+      font-weight: bold;
+    }
+
+    .glass-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.3);
+      color: #222;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .glass-btn.delete {
+      color: #fff;
+      background: rgba(255, 0, 0, 0.3);
+    }
+
+    .glass-btn.delete:hover {
+      background: rgba(255, 0, 0, 0.5);
+    }
+
+    /* Modern text styling */
+    .glass-table th,
+    .glass-table td {
+      font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-table th {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #222;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.18);
+    }
+  </style>
+</div>
